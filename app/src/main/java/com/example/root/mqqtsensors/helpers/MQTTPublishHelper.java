@@ -1,6 +1,7 @@
 package com.example.root.mqqtsensors.helpers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
@@ -14,6 +15,8 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
@@ -96,11 +99,16 @@ public class MQTTPublishHelper {
         }
     }
 
-    public void publishToTopic (String sMessage) {
+    public void publishToTopic (String operatorName,int ledState) {
         String topic = "inTopic";
         //String sMessage = "1";
         try {
-            byte[] encodedMessage = sMessage.getBytes("utf-8");
+            //byte[] encodedMessage = sMessage.getBytes("utf-8");
+            //MqttMessage message = new MqttMessage(encodedMessage);
+            JSONObject jsonToSend=new JSONObject();
+            jsonToSend.put("user",operatorName);
+            jsonToSend.put("ledIsOn", Integer.toString(ledState));
+            byte[] encodedMessage = jsonToSend.toString().getBytes("utf-8");
             MqttMessage message = new MqttMessage(encodedMessage);
             mqttAndroidClient.publish(topic, message);
         } catch (UnsupportedEncodingException uee) {
@@ -108,6 +116,8 @@ public class MQTTPublishHelper {
         } catch (MqttPersistenceException e) {
             e.printStackTrace();
         } catch (MqttException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }

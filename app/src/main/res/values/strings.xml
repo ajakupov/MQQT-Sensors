@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MQQT Sensors</string>
     <string name="enter_text">Veuillez saisir votre message</string>
+    <string name="type_name">Veuillez saisir votre nom</string>
 </resources>

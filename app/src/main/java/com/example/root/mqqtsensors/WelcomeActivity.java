@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.root.mqqtsensors.helpers.MQTTHelper;
 import com.example.root.mqqtsensors.helpers.MQTTPublishHelper;
@@ -23,6 +25,8 @@ public class WelcomeActivity extends AppCompatActivity {
     public EditText publishText;
     public Button publishButton;
     public TextView redirect;
+    private int ledState=0;
+    public String updated = "Romain Vadam update";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         subscribeTextView = (TextView) findViewById(R.id.subscribeTextView);
         publishText = (EditText) findViewById(R.id.publishText);
-        redirect = (TextView) findViewById(R.id.redirect);
+
 
         //Initialieation of the MQTTHelper for the subscription to listen topic on the broker
         starMQTT();
@@ -77,28 +81,30 @@ public class WelcomeActivity extends AppCompatActivity {
 
     public void publishMQTT () {
         //mqttPublishHelper = new MQTTPublishHelper(getApplicationContext());
-        mqttPublishHelper.publishToTopic(publishText.getText().toString());
-        /*mqttPublishHelper.setCallback(new MqttCallbackExtended() {
-            @Override
-            public void connectComplete(boolean b, String s) {
+        String operatorName=publishText.getText().toString();
 
-            }
+        if(operatorName.equals("")) {
+            Toast.makeText(this,"Veuillez saisir votre nom",Toast.LENGTH_LONG);
+        }else {
+            mqttPublishHelper.publishToTopic(publishText.getText().toString(),ledState);
+        }
+        
+    }
 
-            @Override
-            public void connectionLost(Throwable throwable) {
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
 
-            }
-
-            @Override
-            public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-                Log.i("Debug",mqttMessage.toString());
-                helloTextView.setText(mqttMessage.toString());
-            }
-
-            @Override
-            public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
-
-            }
-        });*/
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radioButtonON:
+                if (checked)
+                    ledState=1;
+                    break;
+            case R.id.radioButtonOFF:
+                if (checked)
+                    ledState=0;
+                    break;
+        }
     }
 }
