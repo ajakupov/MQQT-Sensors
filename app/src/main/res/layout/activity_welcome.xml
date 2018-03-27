@@ -13,11 +13,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Le sensor dit:"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:gravity="center"/>
+            android:text="Message du microcontroller:"
+            style="@style/section_titles"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,39 +31,72 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ce que vous dites au sensor:"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:gravity="center"/>
-
-    <EditText
-        android:id="@+id/publishText"
-        android:layout_width="fill_parent"
+            android:text="Commande à envoyer au microcontroller arduino"
+            style="@style/section_titles"/>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="61dp"
-        android:ems="10"
-        android:text="@string/enter_text" android:inputType="text" />
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Votre nom:"
+            android:textStyle="bold"
+            android:textColor="#000000"/>
+        <EditText
+            android:id="@+id/publishText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/button"
+            android:layout_below="@+id/textView1"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/type_name"
+            android:text="" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Etat souhaité pour la LED:"
+            android:textStyle="bold"
+            android:textColor="#000000"/>
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/radioButtonON"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Led: ON"
+                android:onClick="onRadioButtonClicked"/>
+            <RadioButton
+                android:id="@+id/radioButtonOFF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Led: OFF"
+                android:onClick="onRadioButtonClicked"/>
+        </RadioGroup>
+    </LinearLayout>
+
 
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Publish text"
+        android:text="Envoyer la commande"
         android:textSize="25dp"
         android:id="@+id/publishButton"
        android:gravity="center" />
 
-        <TextView
-            android:id="@+id/redirect"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Go to json sender"
-            android:textSize="25dp"
-            android:textAlignment="center"
-            tools:layout_editor_absoluteX="175dp"
-            tools:layout_editor_absoluteY="444dp" />
+
+
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
