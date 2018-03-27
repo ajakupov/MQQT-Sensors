@@ -23,6 +23,7 @@ public class WelcomeActivity extends AppCompatActivity {
     public EditText publishText;
     public Button publishButton;
     public TextView redirect;
+    public String updated = "Romain Vadam update";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
